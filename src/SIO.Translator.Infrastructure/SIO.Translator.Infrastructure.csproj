@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="HangFire" Version="1.7.11" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="3.1.5" />
+    <PackageReference Include="OpenEventSourcing" Version="0.4.0" />
+    <PackageReference Include="OpenEventSourcing.EntityFrameworkCore" Version="0.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SIO.Translator.Migrations\SIO.Translator.Migrations.csproj" />
+  </ItemGroup>
+
+</Project>
