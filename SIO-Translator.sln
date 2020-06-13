@@ -7,17 +7,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8928D48D-F7C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{95D88A7A-B349-481E-9A30-1F52A1DA98BE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SIO.Translator.Domain", "src\SIO.Translator.Domain\SIO.Translator.Domain.csproj", "{EBA5CA39-79DC-4392-9114-D182CB003EBA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SIO.Domain", "src\SIO.Domain\SIO.Domain.csproj", "{EBA5CA39-79DC-4392-9114-D182CB003EBA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SIO.Translator.Migrations", "src\SIO.Translator.Migrations\SIO.Translator.Migrations.csproj", "{99248CFC-5036-4163-B452-6578D1F60CCD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SIO.Migrations", "src\SIO.Migrations\SIO.Migrations.csproj", "{99248CFC-5036-4163-B452-6578D1F60CCD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SIO.Translator.Infrastructure", "src\SIO.Translator.Infrastructure\SIO.Translator.Infrastructure.csproj", "{74885A50-47C7-4C31-B1AB-20E86C978DF6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SIO.Infrastructure", "src\SIO.Infrastructure\SIO.Infrastructure.csproj", "{74885A50-47C7-4C31-B1AB-20E86C978DF6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SIO.Translator.Infrastructure.Google", "src\SIO.Translator.Infrastructure.Google\SIO.Translator.Infrastructure.Google.csproj", "{F279986E-07A5-48D1-A802-2A0162E2ABFE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SIO.Infrastructure.Google", "src\SIO.Infrastructure.Google\SIO.Infrastructure.Google.csproj", "{F279986E-07A5-48D1-A802-2A0162E2ABFE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SIO.Translator.Infrastructure.AWS", "src\SIO.Translator.Infrastructure.AWS\SIO.Translator.Infrastructure.AWS.csproj", "{98359BAD-730C-4F82-8753-5839310830AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SIO.Infrastructure.AWS", "src\SIO.Infrastructure.AWS\SIO.Infrastructure.AWS.csproj", "{98359BAD-730C-4F82-8753-5839310830AB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SIO.Translator.API", "src\SIO.Translator.API\SIO.Translator.API.csproj", "{DE31A70F-9CE5-40D2-B132-2AC03B933662}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SIO.Translator", "src\SIO.Translator\SIO.Translator.csproj", "{DE31A70F-9CE5-40D2-B132-2AC03B933662}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SIO.Infrastructure.Tests", "tests\SIO.Infrastructure.Tests\SIO.Infrastructure.Tests.csproj", "{7AF7B6FB-09C4-4B23-9238-AF927AAB296F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +51,10 @@ Global
 		{DE31A70F-9CE5-40D2-B132-2AC03B933662}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE31A70F-9CE5-40D2-B132-2AC03B933662}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE31A70F-9CE5-40D2-B132-2AC03B933662}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AF7B6FB-09C4-4B23-9238-AF927AAB296F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AF7B6FB-09C4-4B23-9238-AF927AAB296F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AF7B6FB-09C4-4B23-9238-AF927AAB296F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AF7B6FB-09C4-4B23-9238-AF927AAB296F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +66,7 @@ Global
 		{F279986E-07A5-48D1-A802-2A0162E2ABFE} = {8928D48D-F7C0-43F0-82E5-C1EA2CFF8D89}
 		{98359BAD-730C-4F82-8753-5839310830AB} = {8928D48D-F7C0-43F0-82E5-C1EA2CFF8D89}
 		{DE31A70F-9CE5-40D2-B132-2AC03B933662} = {8928D48D-F7C0-43F0-82E5-C1EA2CFF8D89}
+		{7AF7B6FB-09C4-4B23-9238-AF927AAB296F} = {95D88A7A-B349-481E-9A30-1F52A1DA98BE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FA3A37B0-BA93-4FAC-B67B-83879195C3C0}
