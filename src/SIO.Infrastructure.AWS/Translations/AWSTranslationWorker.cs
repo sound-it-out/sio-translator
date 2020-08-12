@@ -67,7 +67,7 @@ namespace SIO.Infrastructure.AWS.Translations
                     await _fileClient.UploadAsync($"{request.AggregateId}.mp3", request.UserId, stream);
                     await _eventPublisher.PublishAsync(new TranslationSucceded(
                         aggregateId: request.AggregateId,
-                        version: ++version,
+                        version: version + 1,
                         correlationId: request.CorrelationId,
                         causationId: request.CausationId,
                         userId: request.UserId
@@ -78,7 +78,7 @@ namespace SIO.Infrastructure.AWS.Translations
             {
                 await _eventPublisher.PublishAsync(new TranslationFailed(
                     aggregateId: request.AggregateId,
-                    version: ++version,
+                    version: version + 1,
                     correlationId: request.CorrelationId,
                     causationId: request.CausationId,
                     error: e.Message,
