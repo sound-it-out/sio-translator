@@ -16,7 +16,7 @@ namespace SIO.Domain.Translation.Events
         public string UserId { get; }
         public long CharactersProcessed { get; }
 
-        public TranslationCharactersProcessed(Guid aggregateId, int version, Guid? correlationId, Guid? causationId, long charactersProcessed)
+        public TranslationCharactersProcessed(Guid aggregateId, int version, Guid? correlationId, Guid? causationId, long charactersProcessed, string userId)
         {
             Id = Guid.NewGuid().ToSequentialGuid();
             AggregateId = aggregateId;
@@ -24,7 +24,7 @@ namespace SIO.Domain.Translation.Events
             CausationId = causationId;
             Timestamp = DateTimeOffset.UtcNow;
             Version = version;
-            UserId = Guid.Empty.ToString();
+            UserId = userId;
             CharactersProcessed = charactersProcessed;
         }
 

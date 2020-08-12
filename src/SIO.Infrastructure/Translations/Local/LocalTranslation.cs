@@ -19,15 +19,15 @@ namespace SIO.Infrastructure.Translations.Local
 
         public Task HandleAsync(IEvent @event)
         {
-            BackgroundJob.Enqueue(() => _translationWorker.StartAsync(
-                new TranslationRequest(
-                    Guid.NewGuid(),
-                    @event.AggregateId,
-                    @event.Version,
-                    @event.UserId,
-                    ""
-                )
-            ));
+            //BackgroundJob.Enqueue(() => _translationWorker.StartAsync(
+            //    new TranslationRequest(
+            //        Guid.NewGuid(),
+            //        @event.AggregateId,
+            //        @event.Version,
+            //        @event.UserId,
+            //        ""
+            //    )
+            //));
 
             return Task.CompletedTask;
         }

@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using OpenEventSourcing.Azure.ServiceBus.Extensions;
 using OpenEventSourcing.EntityFrameworkCore.SqlServer;
 using OpenEventSourcing.Extensions;
-using OpenEventSourcing.RabbitMQ.Extensions;
 using OpenEventSourcing.Serialization.Json.Extensions;
 using SIO.Infrastructure.AWS.Extensions;
 using SIO.Infrastructure.Extensions;
@@ -31,11 +31,17 @@ namespace SIO.Translator
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddInfrastructure();
-
             var openEventSourceBuilder = services.AddOpenEventSourcing()
                 .AddEntityFrameworkCoreSqlServer(options => {
                     options.MigrationsAssembly("SIO.Migrations");
+                })
+                .AddAzureServiceBus(options =>
+                {
+                    options.UseConnection(_configuration.GetValue<string>("Azure:ServiceBus:ConnectionString"))
+                    .UseTopic(e =>
+                    {
+                        e.WithName(_configuration.GetValue<string>("Azure:ServiceBus:Topic"));
+                    });
                 })
                 .AddCommands()
                 .AddEvents()
@@ -44,22 +50,8 @@ namespace SIO.Translator
             if (_env.IsDevelopment())
             {
                 services.AddLocalFiles()
-                    .AddLocalTranslations();
-
-                openEventSourceBuilder.AddRabbitMq(options =>
-                 {
-                     options.UseConnection(_configuration.GetValue<string>("RabbitMQ:Connection"))
-                         .UseExchange(e =>
-                         {
-                             e.WithName(_configuration.GetValue<string>("RabbitMQ:Exchange:Name"));
-                             e.UseExchangeType(_configuration.GetValue<string>("RabbitMQ:Exchange:Type"));
-                         })
-                         .UseManagementApi(m =>
-                         {
-                             m.WithEndpoint(_configuration.GetValue<string>("RabbitMQ:ManagementApi:Endpoint"));
-                             m.WithCredentials(_configuration.GetValue<string>("RabbitMQ:ManagementApi:Username"), _configuration.GetValue<string>("RabbitMQ:ManagementApi:Password"));
-                         });
-                 });
+                    .AddGoogleTranslations();
+                //.AddLocalTranslations();
             }
             else
             {
@@ -74,6 +66,8 @@ namespace SIO.Translator
                     sql.EnableRetryOnFailure();
                     sql.MigrationsAssembly("SIO.Migrations");
                 }));
+
+            services.AddInfrastructure();
 
             services.AddHangfire(options => options.UseSqlServerStorage(_configuration.GetConnectionString("DefaultConnection")));
             services.AddHangfireServer();

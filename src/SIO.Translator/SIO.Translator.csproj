@@ -12,9 +12,9 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="OpenEventSourcing" Version="0.4.0" />
+    <PackageReference Include="OpenEventSourcing.Azure.ServiceBus" Version="0.4.0" />
     <PackageReference Include="OpenEventSourcing.EntityFrameworkCore" Version="0.4.0" />
     <PackageReference Include="OpenEventSourcing.EntityFrameworkCore.SqlServer" Version="0.4.0" />
-    <PackageReference Include="OpenEventSourcing.RabbitMQ" Version="0.4.0" />
     <PackageReference Include="OpenEventSourcing.Serialization.Json" Version="0.4.0" />
   </ItemGroup>
 

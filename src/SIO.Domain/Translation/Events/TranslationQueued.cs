@@ -15,7 +15,7 @@ namespace SIO.Domain.Translation.Events
         public int Version { get; }
         public string UserId { get; }
 
-        public TranslationQueued(Guid aggregateId, int version, Guid? correlationId, Guid? causationId)
+        public TranslationQueued(Guid aggregateId, int version, Guid? correlationId, Guid? causationId, string userId)
         {
             Id = Guid.NewGuid().ToSequentialGuid();
             AggregateId = aggregateId;
@@ -23,7 +23,7 @@ namespace SIO.Domain.Translation.Events
             CausationId = causationId;
             Timestamp = DateTimeOffset.UtcNow;
             Version = version;
-            UserId = Guid.Empty.ToString();
+            UserId = userId;
         }
 
         public void UpdateFrom(ICommand command)

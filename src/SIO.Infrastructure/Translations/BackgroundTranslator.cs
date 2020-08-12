@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using OpenEventSourcing.Events;
+using SIO.Infrastructure.Events;
 using SIO.Infrastructure.Translations;
 using SIO.Migrations.DbContexts;
 using SIO.Migrations.Entities;
@@ -18,7 +19,7 @@ namespace SIO.Domain.Translations
         private readonly CancellationTokenSource _stoppingCts = new CancellationTokenSource();
         protected readonly ILogger<BackgroundTranslator<TTranslator>> _logger;
         protected readonly IServiceScope _scope;
-        private readonly IEventStore _eventStore;
+        private readonly ISIOEventStore _eventStore;
         private readonly TTranslator _translator;
 
         protected TranslatorState _translatorState;
@@ -34,7 +35,7 @@ namespace SIO.Domain.Translations
 
             _logger = logger;
             _scope = serviceScopeFactory.CreateScope();
-            _eventStore = _scope.ServiceProvider.GetRequiredService<IEventStore>();
+            _eventStore = _scope.ServiceProvider.GetRequiredService<ISIOEventStore>();
             _translator = _scope.ServiceProvider.GetRequiredService<TTranslator>();
         }
 
@@ -96,7 +97,7 @@ namespace SIO.Domain.Translations
                     {
                         await context.Entry(_translatorState).ReloadAsync();
 
-                        var page = await _eventStore.GetEventsAsync(_translatorState.Position);
+                        var page = await _eventStore.TryGetEventsAsync(_translatorState.Position);
 
                         foreach (var @event in page.Events)
                             await _translator.HandleAsync(@event);

@@ -58,8 +58,9 @@ namespace SIO.Infrastructure.Google.Translations
                 aggregateId: request.AggregateId,
                 version: version,
                 correlationId: request.CorrelationId,
-                causationId: Guid.Empty,
-                characterCount: textChunks.Sum(tc => tc.Length)
+                causationId: request.CausationId,
+                characterCount: textChunks.Sum(tc => tc.Length),
+                userId: request.UserId
             ));
 
             try
@@ -83,8 +84,9 @@ namespace SIO.Infrastructure.Google.Translations
                             aggregateId: request.AggregateId,
                             version: version,
                             correlationId: request.CorrelationId,
-                            causationId: Guid.Empty,
-                            charactersProcessed: length
+                            causationId: request.CausationId,
+                            charactersProcessed: length,
+                            userId: request.UserId
                         ));
                     }
                 ));
@@ -97,7 +99,8 @@ namespace SIO.Infrastructure.Google.Translations
                         aggregateId: request.AggregateId,
                         version: ++version,
                         correlationId: request.CorrelationId,
-                        causationId: Guid.Empty
+                        causationId: request.CausationId,
+                        userId: request.UserId
                     ));
                 }
             }
@@ -107,8 +110,9 @@ namespace SIO.Infrastructure.Google.Translations
                     aggregateId: request.AggregateId,
                     version: ++version,
                     correlationId: request.CorrelationId,
-                    causationId: null,
-                    error: e.Message
+                    causationId: request.CausationId,
+                    error: e.Message,
+                    userId: request.UserId
                 ));
             }
         }
