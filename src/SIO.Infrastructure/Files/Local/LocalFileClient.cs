@@ -27,20 +27,13 @@ namespace SIO.Infrastructure.Files.Local
 
         public async Task UploadAsync(string fileName, string userId, Stream stream)
         {
-            try
-            {
-                var path = Path.Combine(Path.GetTempPath(), $"sio/{userId}");
-                Directory.CreateDirectory(path);
+            var path = Path.Combine(Path.GetTempPath(), $"sio/{userId}");
+            Directory.CreateDirectory(path);
 
-                using (var s = File.OpenWrite(Path.Combine(path, fileName)))
-                {
-                    stream.Seek(0, SeekOrigin.Begin);
-                    await stream.CopyToAsync(s);
-                }
-            }
-            catch (Exception e)
+            using (var s = File.OpenWrite(Path.Combine(path, fileName)))
             {
-                throw e;
+                stream.Seek(0, SeekOrigin.Begin);
+                await stream.CopyToAsync(s);
             }
         }
     }

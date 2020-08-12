@@ -45,7 +45,7 @@ namespace SIO.Tests.Infrastructure
                 if (ExceptionMode == ExceptionMode.Record)
                     Exception = e;
                 else
-                    throw e;
+                    throw;
             }
         }
     }
@@ -87,7 +87,7 @@ namespace SIO.Tests.Infrastructure
                 if (ExceptionMode == ExceptionMode.Record)
                     Exception = e;
                 else
-                    throw e;
+                    throw;
             }
         }
     }
