@@ -32,16 +32,16 @@ jobs:
     - name: Test SIO.Infrastructure.Google.Tests
       run: dotnet test tests/SIO.Infrastructure.Google.Tests/SIO.Infrastructure.Google.Tests.csproj --configuration Release --no-restore --no-build --verbosity normal -- xunit.parallelizeAssembly=true
       env: 
-        SIO_Google__Credentails__Type: ${{ secrets.Google_Credentails_Type }}
-        SIO_Google__Credentails__ProjectId: ${{ secrets.Google_Credentails_ProjectId }}
-        SIO_Google__Credentails__PrivateKeyId: ${{ secrets.Google_Credentails_PrivateKeyId }}
-        SIO_Google__Credentails__PrivateKey: ${{ secrets.Google_Credentails_PrivateKey }}
-        SIO_Google__Credentails__ClientEmail: ${{ secrets.Google_Credentails_ClientEmail }}
-        SIO_Google__Credentails__ClientId: ${{ secrets.Google_Credentails_ClientId }}
-        SIO_Google__Credentails__AuthUri: ${{ secrets.Google_Credentails_AuthUri }}
-        SIO_Google__Credentails__TokenUri: ${{ secrets.Google_Credentails_TokenUri }}
-        SIO_Google__Credentails__AuthProviderX509CertUrl: ${{ secrets.Google_Credentails_AuthProviderX509CertUrl }}
-        SIO_Google__Credentails__ClientX509CertUrl: ${{ secrets.Google_Credentails_ClientX509CertUrl }}
+        SIO_GOOGLE__CREDENTIALS__TYPE: ${{ secrets.GOOGLE_CREDENTAILS_TYPE }}
+        SIO_GOOGLE__CREDENTIALS__PROJECTID: ${{ secrets.GOOGLE_CREDENTAILS_PROJECTID }}
+        SIO_GOOGLE__CREDENTIALS__PRIVATEKEYID: ${{ secrets.GOOGLE_CREDENTAILS_PRIVATEKEYID }}
+        SIO_GOOGLE__CREDENTIALS__PRIVATEKEY: ${{ secrets.GOOGLE_CREDENTAILS_PRIVATEKEY }}
+        SIO_GOOGLE__CREDENTIALS__CLIENTEMAIL: ${{ secrets.GOOGLE_CREDENTAILS_CLIENTEMAIL }}
+        SIO_GOOGLE__CREDENTIALS__CLIENTID: ${{ secrets.GOOGLE_CREDENTAILS_CLIENTID }}
+        SIO_GOOGLE__CREDENTIALS__AUTHURI: ${{ secrets.GOOGLE_CREDENTAILS_AUTHURI }}
+        SIO_GOOGLE__CREDENTIALS__TOKENURI: ${{ secrets.GOOGLE_CREDENTAILS_TOKENURI }}
+        SIO_GOOGLE__CREDENTIALS__AUTHPROVIDERX509CERTURL: ${{ secrets.GOOGLE_CREDENTAILS_AUTHPROVIDERX509CERTURL }}
+        SIO_GOOGLE__CREDENTIALS__CLIENTX509CERTURL: ${{ secrets.GOOGLE_CREDENTAILS_CLIENTX509CERTURL }}
     # Test SIO.Infrastructure.Tests
     - name: Test SIO.Infrastructure.Tests
       run: dotnet test tests/SIO.Infrastructure.Tests/SIO.Infrastructure.Tests.csproj --configuration Release --no-restore --no-build --verbosity normal -- xunit.parallelizeAssembly=true
