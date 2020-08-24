@@ -1,24 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
 
     <IsPackable>false</IsPackable>
-
-    <UserSecretsId>8c3802e8-2df9-44a6-b98d-d2c92d21ea4c</UserSecretsId>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Remove="appsettings.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="appsettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="5.10.3" />
@@ -34,8 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\SIO.Infrastructure.Google\SIO.Infrastructure.Google.csproj" />
-    <ProjectReference Include="..\..\src\SIO.Infrastructure\SIO.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\SIO.Infrastructure.Local\SIO.Infrastructure.Local.csproj" />
     <ProjectReference Include="..\..\src\SIO.Testing\SIO.Testing.csproj" />
   </ItemGroup>
 

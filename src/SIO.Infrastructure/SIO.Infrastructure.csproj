@@ -16,4 +16,8 @@
     <ProjectReference Include="..\SIO.Migrations\SIO.Migrations.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Files\Local\" />
+  </ItemGroup>
+
 </Project>

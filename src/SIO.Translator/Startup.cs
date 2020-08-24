@@ -47,17 +47,17 @@ namespace SIO.Translator
                 .AddEvents()
                 .AddJsonSerializers();
 
+            services.AddGoogleTranslations(_configuration)
+                    .AddAWSTranslations(_configuration);
+
             if (_env.IsDevelopment())
             {
                 services.AddLocalFiles()
-                    .AddGoogleTranslations(_configuration);
-                //.AddLocalTranslations();
+                    .AddLocalTranslations();
             }
             else
             {
-                services.AddGoogleTranslations(_configuration)
-                    .AddAWSTranslations()
-                    .AddAWSFiles();
+                services.AddAWSFiles();
             }
 
             services.AddDbContext<SIOTranslatorDbContext>(options =>

@@ -30,7 +30,7 @@ jobs:
       run: dotnet test tests/SIO.Domain.Tests/SIO.Domain.Tests.csproj --configuration Release --no-restore --no-build --verbosity normal -- xunit.parallelizeAssembly=true
     # Test SIO.Infrastructure.AWS.Tests
     - name: Test SIO.Infrastructure.AWS.Tests
-      run: dotnet test tests/SIO.Infrastructure.AWS.Tests/SIO.Infrastructure.AWS.Tests.csproj --configuration Release --no-restore --no-build --verbosity normal -- xunit.parallelizeAssembly=true
+      run: dotnet test tests/SIO.Infrastructure.AWS.Tests/SIO.Infrastructure.AWS.Tests.csproj --configuration Release --no-restore --no-build --verbosity normal --filter Category=Unit -- xunit.parallelizeAssembly=true
     # Test SIO.Infrastructure.Google.Tests
     - name: Test SIO.Infrastructure.Google.Tests
       run: dotnet test tests/SIO.Infrastructure.Google.Tests/SIO.Infrastructure.Google.Tests.csproj --configuration Release --no-restore --no-build --verbosity normal --filter Category=Unit -- xunit.parallelizeAssembly=true

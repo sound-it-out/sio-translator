@@ -4,6 +4,7 @@
     {
         Google,
         AWS,
-        Microsoft
+        Microsoft,
+        Local
     }
 }

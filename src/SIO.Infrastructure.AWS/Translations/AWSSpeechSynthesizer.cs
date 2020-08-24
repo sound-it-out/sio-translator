@@ -2,6 +2,7 @@
 using Amazon.Polly;
 using Amazon.Polly.Model;
 using Amazon.Runtime;
+using Microsoft.Extensions.Options;
 using SIO.Infrastructure.Files;
 using SIO.Infrastructure.Translations;
 using System;
@@ -15,11 +16,15 @@ namespace SIO.Infrastructure.AWS.Translations
         private readonly IAmazonPolly _pollyClient;
         private readonly IFileClient _fileClient;
 
-        public AWSSpeechSynthesizer(IFileClient fileClient)
+        public AWSSpeechSynthesizer(IFileClient fileClient, IOptions<AWSCredentialOptions> awsCredentialOptions)
         {
-            _fileClient = fileClient;
+            if (fileClient == null)
+                throw new ArgumentNullException(nameof(fileClient));
+            if (awsCredentialOptions == null)
+                throw new ArgumentNullException(nameof(awsCredentialOptions));
 
-            _pollyClient = new AmazonPollyClient(new BasicAWSCredentials("", ""), RegionEndpoint.EUWest1);
+            _fileClient = fileClient;
+            _pollyClient = new AmazonPollyClient(new BasicAWSCredentials(awsCredentialOptions.Value.AccessKey, awsCredentialOptions.Value.SceretKey), RegionEndpoint.EUWest1);
         }
         public async ValueTask<ISpeechResult> TranslateTextAsync(AWSSpeechRequest request)
         {         

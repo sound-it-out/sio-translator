@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
+using SIO.Infrastructure.Translations;
 
-namespace SIO.Infrastructure.Translations.Local
+namespace SIO.Infrastructure.Local.Translations
 {
     internal class LocalTranslationWorker : ITranslationWorker<LocalTranslation>
     {

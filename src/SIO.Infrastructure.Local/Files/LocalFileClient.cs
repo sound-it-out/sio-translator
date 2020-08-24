@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.StaticFiles;
-using System;
+﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.StaticFiles;
+using SIO.Infrastructure.Files;
 
-namespace SIO.Infrastructure.Files.Local
+namespace SIO.Infrastructure.Local.Files
 {
     internal class LocalFileClient : IFileClient
     {
