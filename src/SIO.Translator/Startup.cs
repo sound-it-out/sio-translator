@@ -50,12 +50,12 @@ namespace SIO.Translator
             if (_env.IsDevelopment())
             {
                 services.AddLocalFiles()
-                    .AddGoogleTranslations();
+                    .AddGoogleTranslations(_configuration);
                 //.AddLocalTranslations();
             }
             else
             {
-                services.AddGoogleTranslations()
+                services.AddGoogleTranslations(_configuration)
                     .AddAWSTranslations()
                     .AddAWSFiles();
             }

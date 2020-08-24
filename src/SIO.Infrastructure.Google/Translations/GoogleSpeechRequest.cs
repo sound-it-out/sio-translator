@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace SIO.Infrastructure.Google.Translations
 {
-    internal sealed class GoogleSpeechRequest : ISpeechRequest
+    public sealed class GoogleSpeechRequest : ISpeechRequest
     {
         public VoiceSelectionParams VoiceSelection { get; }
         public AudioConfig AudioConfig { get; }

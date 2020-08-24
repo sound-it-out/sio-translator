@@ -37,6 +37,5 @@ namespace SIO.Infrastructure.Google.Translations
             }
             return rv;
         }
-
     }
 }

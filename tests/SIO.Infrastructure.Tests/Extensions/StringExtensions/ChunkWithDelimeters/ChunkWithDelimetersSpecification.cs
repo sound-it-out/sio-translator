@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using SIO.Tests.Infrastructure;
+﻿using System.Collections.Generic;
+using SIO.Testing.Abstractions;
 
 namespace SIO.Infrastructure.Tests.Extensions.StringExtensions
 {

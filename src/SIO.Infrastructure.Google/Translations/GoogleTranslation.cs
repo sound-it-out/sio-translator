@@ -10,7 +10,7 @@ using SIO.Infrastructure.Translations;
 
 namespace SIO.Infrastructure.Google.Translations
 {
-    internal sealed class GoogleTranslation : Translation
+    public sealed class GoogleTranslation : Translation
     {
         private readonly ITranslationWorker<GoogleTranslation> _translationWorker;
         private readonly IEventPublisher _eventPublisher;
@@ -50,7 +50,8 @@ namespace SIO.Infrastructure.Google.Translations
                     translationQueuedEvent.CausationId.Value,
                     translationQueuedEvent.Version,
                     documentUploaded.UserId,
-                    documentUploaded.FileName
+                    documentUploaded.FileName,
+                    documentUploaded.TranslationSubject
                 )
             ));
         }

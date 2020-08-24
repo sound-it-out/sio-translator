@@ -2,16 +2,17 @@
 
 namespace SIO.Infrastructure.Translations
 {
-    public struct TranslationRequest
+    public class TranslationRequest
     {
-        public readonly Guid AggregateId;
-        public readonly Guid CorrelationId;
-        public readonly Guid CausationId;
-        public readonly int Version;
-        public readonly string UserId;
-        public readonly string FileName;
+        public Guid AggregateId { get; }
+        public Guid CorrelationId { get; }
+        public Guid CausationId { get; }
+        public int Version { get; }
+        public string UserId { get; }
+        public string FileName { get; }
+        public string TranslationSubject { get; }
 
-        public TranslationRequest(Guid aggregateId, Guid correlationId, Guid causationId, int version, string userId, string fileName)
+        public TranslationRequest(Guid aggregateId, Guid correlationId, Guid causationId, int version, string userId, string fileName, string translationSubject)
         {
             AggregateId = aggregateId;
             CorrelationId = correlationId;
@@ -19,6 +20,7 @@ namespace SIO.Infrastructure.Translations
             Version = version;
             UserId = userId;
             FileName = fileName;
+            TranslationSubject = translationSubject;
         }
     }
 }

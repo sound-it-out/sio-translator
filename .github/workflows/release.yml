@@ -31,6 +31,17 @@ jobs:
     # Test SIO.Infrastructure.Google.Tests
     - name: Test SIO.Infrastructure.Google.Tests
       run: dotnet test tests/SIO.Infrastructure.Google.Tests/SIO.Infrastructure.Google.Tests.csproj --configuration Release --no-restore --no-build --verbosity normal -- xunit.parallelizeAssembly=true
+      env: 
+        SIO_Google__Credentails__Type: ${{ secrets.Google_Credentails_Type }}
+        SIO_Google__Credentails__ProjectId: ${{ secrets.Google_Credentails_ProjectId }}
+        SIO_Google__Credentails__PrivateKeyId: ${{ secrets.Google_Credentails_PrivateKeyId }}
+        SIO_Google__Credentails__PrivateKey: ${{ secrets.Google_Credentails_PrivateKey }}
+        SIO_Google__Credentails__ClientEmail: ${{ secrets.Google_Credentails_ClientEmail }}
+        SIO_Google__Credentails__ClientId: ${{ secrets.Google_Credentails_ClientId }}
+        SIO_Google__Credentails__AuthUri: ${{ secrets.Google_Credentails_AuthUri }}
+        SIO_Google__Credentails__TokenUri: ${{ secrets.Google_Credentails_TokenUri }}
+        SIO_Google__Credentails__AuthProviderX509CertUrl: ${{ secrets.Google_Credentails_AuthProviderX509CertUrl }}
+        SIO_Google__Credentails__ClientX509CertUrl: ${{ secrets.Google_Credentails_ClientX509CertUrl }}
     # Test SIO.Infrastructure.Tests
     - name: Test SIO.Infrastructure.Tests
       run: dotnet test tests/SIO.Infrastructure.Tests/SIO.Infrastructure.Tests.csproj --configuration Release --no-restore --no-build --verbosity normal -- xunit.parallelizeAssembly=true

@@ -58,7 +58,7 @@ namespace SIO.Infrastructure.AWS.Translations
                 var result = await _speechSynthesizer.TranslateTextAsync(new AWSSpeechRequest { 
                     OutputFormat = "",
                     Text = text,
-                    VoiceId = Amazon.Polly.VoiceId.Amy
+                    VoiceId = request.TranslationSubject
                 });;
 
 

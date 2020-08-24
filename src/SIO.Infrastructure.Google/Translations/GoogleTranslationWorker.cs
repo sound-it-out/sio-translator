@@ -40,7 +40,7 @@ namespace SIO.Infrastructure.Google.Translations
             int version = request.Version + 1;
 
             var fileResult = await _fileClient.DownloadAsync(
-                fileName: $"{request.CorrelationId.ToString()}{Path.GetExtension(request.FileName)}",
+                fileName: $"{request.CorrelationId}{Path.GetExtension(request.FileName)}",
                 userId: request.UserId
             );
 
@@ -68,8 +68,7 @@ namespace SIO.Infrastructure.Google.Translations
                 var result = await _speechSynthesizer.TranslateTextAsync(new GoogleSpeechRequest(
                     voiceSelection: new VoiceSelectionParams
                     {
-                        LanguageCode = "en-US",
-                        SsmlGender = SsmlVoiceGender.Neutral
+                        Name = request.TranslationSubject
                     },
                     audioConfig: new AudioConfig
                     {

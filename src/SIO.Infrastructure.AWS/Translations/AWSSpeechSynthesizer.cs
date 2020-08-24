@@ -12,7 +12,7 @@ namespace SIO.Infrastructure.AWS.Translations
 {
     internal class AWSSpeechSynthesizer : ISpeechSynthesizer<AWSSpeechRequest>
     {
-        public readonly IAmazonPolly _pollyClient;
+        private readonly IAmazonPolly _pollyClient;
         private readonly IFileClient _fileClient;
 
         public AWSSpeechSynthesizer(IFileClient fileClient)

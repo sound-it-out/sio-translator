@@ -50,7 +50,8 @@ namespace SIO.Infrastructure.AWS.Translations
                     translationQueuedEvent.CausationId.Value,
                     translationQueuedEvent.Version,
                     documentUploaded.UserId,
-                    documentUploaded.FileName
+                    documentUploaded.FileName,
+                    documentUploaded.TranslationSubject
                 )
             ));
         }

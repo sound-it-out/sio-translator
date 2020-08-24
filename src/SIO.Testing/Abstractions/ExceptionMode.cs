@@ -1,4 +1,4 @@
-﻿namespace SIO.Tests.Infrastructure
+﻿namespace SIO.Testing.Abstractions
 {
     public enum ExceptionMode
     {
