@@ -40,7 +40,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Files\AWSFileClient\UploadAsync\" />
+    <Folder Include="Files\AWSFileClient\DeleteAsync\" />
   </ItemGroup>
 
 </Project>

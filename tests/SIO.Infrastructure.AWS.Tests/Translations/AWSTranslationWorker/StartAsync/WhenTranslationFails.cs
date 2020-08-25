@@ -32,10 +32,10 @@ namespace SIO.Infrastructure.Google.Tests.Translations.AWSTranslationWorker.Star
             _translationRequest = new TranslationRequest(_aggregateId, Guid.NewGuid(), Guid.NewGuid(), 1, Guid.NewGuid().ToString(), "test.txt", "en-GB-Standard-F");
 
             using (var ms = new MemoryStream())
+            using(TextWriter tw = new StreamWriter(ms))
             {
-                TextWriter tw = new StreamWriter(ms);
-                tw.Write("some test text.");
-                tw.Flush();
+                await tw.WriteAsync("some test text.");
+                await tw.FlushAsync();
                 ms.Position = 0;
                 await fileClient.UploadAsync($"{_translationRequest.CorrelationId}{Path.GetExtension(_translationRequest.FileName)}", _translationRequest.UserId, ms);
             }
