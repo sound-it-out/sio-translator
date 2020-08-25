@@ -8,13 +8,19 @@ namespace SIO.Infrastructure.Google.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddGoogleTranslations(this IServiceCollection source, IConfiguration configuration)
+        public static IServiceCollection AddGoogleTranslations(this IServiceCollection source)
         {
-            source.Configure<GoogleCredentialOptions>(configuration.GetSection("Google:Credentails"));
             source.AddHostedService<BackgroundTranslator<GoogleTranslation>>();
             source.AddScoped<GoogleTranslation>();
             source.AddGoogleSpeechSynthesizer();
             source.AddGoogleTranslationWorker();
+
+            return source;
+        }
+
+        public static IServiceCollection AddGoogleConfiguration(this IServiceCollection source, IConfiguration configuration)
+        {
+            source.Configure<GoogleCredentialOptions>(configuration.GetSection("Google:Credentails"));
 
             return source;
         }

@@ -54,6 +54,7 @@ namespace SIO.Infrastructure.Google.Tests.Translations.GoogleSpeechSynthesizer.T
                 callback: length =>
                 {
                     Interlocked.Increment(ref _chunksExectued);
+                    return Task.CompletedTask;
                 }
             );
 

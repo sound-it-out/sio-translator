@@ -10,14 +10,21 @@ namespace SIO.Infrastructure.AWS.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddAWSTranslations(this IServiceCollection source, IConfiguration configuration)
+        public static IServiceCollection AddAWSTranslations(this IServiceCollection source)
         {
-            source.Configure<AWSCredentialOptions>(configuration.GetSection("AWS:Credentails"));
             source.AddHostedService<BackgroundTranslator<AWSTranslation>>();
             source.AddScoped<AWSTranslation>();
             source.AddAWSSpeechSynthesizer();
             source.AddAWSTranslationWorker();
 
+            return source;
+        }
+
+        public static IServiceCollection AddAWSConfiguration(this IServiceCollection source, IConfiguration configuration)
+        {
+            source.Configure<AWSCredentialOptions>(configuration.GetSection("AWS:Credentails"));
+            source.Configure<AWSFileOptions>(configuration.GetSection("AWS:S3"));
+            source.Configure<AWSTranslationOptions>(configuration.GetSection("AWS:Polly"));
             return source;
         }
 

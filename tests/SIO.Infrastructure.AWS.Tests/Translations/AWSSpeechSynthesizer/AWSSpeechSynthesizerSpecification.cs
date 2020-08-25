@@ -4,6 +4,7 @@ using SIO.Infrastructure.AWS.Extensions;
 using SIO.Infrastructure.AWS.Translations;
 using SIO.Infrastructure.Translations;
 using SIO.Testing.Abstractions;
+using SIO.Testing.Extensions;
 using Xunit;
 
 namespace SIO.Infrastructure.AWS.Tests.Translations.AWSSpeechSynthesizer
@@ -25,7 +26,9 @@ namespace SIO.Infrastructure.AWS.Tests.Translations.AWSSpeechSynthesizer
         protected override void BuildServices(IServiceCollection services)
         {
             base.BuildServices(services);
-            services.AddAWSTranslations(_configurationFixture.Configuration);
+            services.AddAWSConfiguration(_configurationFixture.Configuration)
+                .AddAWSSpeechSynthesizer()
+                .AddAWSFiles();
         }
     }
 }

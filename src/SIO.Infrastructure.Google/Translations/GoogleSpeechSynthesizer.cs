@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using SIO.Infrastructure.Extensions;
 using SIO.Infrastructure.Translations;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -33,14 +34,22 @@ namespace SIO.Infrastructure.Google.Translations
 
             var chunks = request.Content.Chunk(30).ToArray();
 
+            var textIndex = 0;
+
             for (int i = 0; i < chunks.Length; i++)
             {
                 if(i > 0)
                     await Task.Delay(60000);
 
-                await Task.WhenAll(chunks[i].Select((c, j) =>
-                    QueueText(c, j, request, result)
-                ));
+                var tasks = new List<Task>();
+
+                foreach(var chunk in chunks[i])
+                {
+                    tasks.Add(QueueText(chunk, textIndex, request, result));
+                    textIndex++;
+                }
+
+                await Task.WhenAll(tasks);
             }
 
             return result;
@@ -58,7 +67,7 @@ namespace SIO.Infrastructure.Google.Translations
             );
 
             result.DigestBytes(index, response.AudioContent);
-            request.CallBack(text.Length);
+            await request.CallBack(text.Length);
         }
     }
 }

@@ -1,20 +1,23 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Amazon.Polly;
 using FluentAssertions;
 using SIO.Infrastructure.AWS.Translations;
+using SIO.Infrastructure.Extensions;
 using SIO.Infrastructure.Translations;
 using SIO.Testing.Attributes;
 
 namespace SIO.Infrastructure.AWS.Tests.Translations.AWSSpeechSynthesizer.TranslateTextAsync
 {
-    public class WhenValidTextSupplied : AWSSpeechSynthesizerSpecification
+    public class WhenMaximumCharactersIsExceeded : AWSSpeechSynthesizerSpecification
     {
         private const string _fiveHundredCharacters = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed viverra justo sed elit eleifend, non sagittis dolor consequat. Duis erat odio, sodales non bibendum vitae, elementum at augue. Phasellus tristique semper nisl ac mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed viverra justo sed elit eleifend, non sagittis dolor consequat. Duis erat odio, sodales non bibendum vitae, elementum at augue. Phasellus tristique semper nisl ac mattis. Phasellus tristique semper nisl ac ma.";
         private AWSSpeechRequest _request;
 
-        public WhenValidTextSupplied(ConfigurationFixture configurationFixture, SpeechSynthesizerFixture speechSynthesizerFixture) : base(configurationFixture, speechSynthesizerFixture)
+        public WhenMaximumCharactersIsExceeded(ConfigurationFixture configurationFixture, SpeechSynthesizerFixture speechSynthesizerFixture) : base(configurationFixture, speechSynthesizerFixture)
         {
         }
 
@@ -25,27 +28,23 @@ namespace SIO.Infrastructure.AWS.Tests.Translations.AWSSpeechSynthesizer.Transla
 
         protected override Task When()
         {
-            ExceptionMode = Testing.Abstractions.ExceptionMode.Record;
             var sb = new StringBuilder();
 
             for (int i = 0; i < 350; i++)
             {
                 sb.Append(_fiveHundredCharacters);
             }
+
+            var textChunks = sb.ToString().ChunkWithDelimeters(100000, '.', '!', '?', ')', '"', '}', ']');
+
             _request = new AWSSpeechRequest
             {
-                OutputFormat = "",
-                Text = sb.ToString(),
+                OutputFormat = OutputFormat.Mp3,
+                Content = textChunks,
                 VoiceId = VoiceId.Aditi
             };
 
             return Task.CompletedTask;
-        }
-
-        [Integration]
-        public void NoExceptionsShouldBeThrown()
-        {
-            Exception.Should().BeNull();
         }
 
         [Integration]

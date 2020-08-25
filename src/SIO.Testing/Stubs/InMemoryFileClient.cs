@@ -15,6 +15,12 @@ namespace SIO.Testing.Stubs
             _files = new ConcurrentDictionary<string, FileValue>();
         }
 
+        public Task DeleteAsync(string fileName, string userId)
+        {
+            _files.TryRemove(BuildPath(fileName, userId), out var file);
+            return Task.CompletedTask;
+        }
+
         public Task<FileResult> DownloadAsync(string fileName, string userId)
         {
             if(_files.TryGetValue(BuildPath(fileName, userId), out var file))

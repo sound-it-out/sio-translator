@@ -25,7 +25,8 @@ namespace SIO.Infrastructure.Google.Tests.Translations.GoogleSpeechSynthesizer
         protected override void BuildServices(IServiceCollection services)
         {
             base.BuildServices(services);
-            services.AddGoogleTranslations(_configurationFixture.Configuration);
+            services.AddGoogleConfiguration(_configurationFixture.Configuration)
+                .AddGoogleSpeechSynthesizer();
         }
     }
 }

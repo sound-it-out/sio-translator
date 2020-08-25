@@ -20,6 +20,12 @@ namespace SIO.Infrastructure.Local.Files
             return contentType;
         }
 
+        public Task DeleteAsync(string fileName, string userId)
+        {
+            File.Delete(Path.Combine(Path.GetTempPath(), $"sio/{userId}/{fileName}"));
+            return Task.CompletedTask;
+        }
+
         public Task<FileResult> DownloadAsync(string fileName, string userId)
         {
             var stream = File.OpenRead(Path.Combine(Path.GetTempPath(), $"sio/{userId}/{fileName}"));

@@ -18,6 +18,7 @@ namespace SIO.Infrastructure.Google.Translations
         private readonly IEventPublisher _eventPublisher;
         private readonly IFileClient _fileClient;
         private readonly ISpeechSynthesizer<GoogleSpeechRequest> _speechSynthesizer;
+        private readonly SemaphoreSlim _semaphoreSlim = new SemaphoreSlim(1, 1);
 
         public GoogleTranslationWorker(IEventPublisher eventPublisher,
             IFileClient fileClient,
@@ -78,15 +79,27 @@ namespace SIO.Infrastructure.Google.Translations
                     callback: async length =>
                     {
                         Interlocked.Increment(ref version);
+                        await _semaphoreSlim.WaitAsync();
 
-                        await _eventPublisher.PublishAsync(new TranslationCharactersProcessed(
-                            aggregateId: request.AggregateId,
-                            version: version,
-                            correlationId: request.CorrelationId,
-                            causationId: request.CausationId,
-                            charactersProcessed: length,
-                            userId: request.UserId
-                        ));
+                        try
+                        {
+                            await _eventPublisher.PublishAsync(new TranslationCharactersProcessed(
+                                aggregateId: request.AggregateId,
+                                version: version,
+                                correlationId: request.CorrelationId,
+                                causationId: request.CausationId,
+                                charactersProcessed: length,
+                                userId: request.UserId
+                            ));
+                        }
+                        catch(Exception)
+                        {
+                            throw;
+                        }
+                        finally
+                        {
+                            _semaphoreSlim.Release();
+                        }
                     }
                 ));
 

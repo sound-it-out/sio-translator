@@ -48,8 +48,10 @@ namespace SIO.Translator
                 .AddEvents()
                 .AddJsonSerializers();
 
-            services.AddGoogleTranslations(_configuration)
-                    .AddAWSTranslations(_configuration);
+            services.AddGoogleConfiguration(_configuration)
+                    .AddGoogleTranslations()
+                    .AddAWSConfiguration(_configuration)
+                    .AddAWSTranslations();
 
             if (_env.IsDevelopment())
             {
