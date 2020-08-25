@@ -12,6 +12,7 @@ using OpenEventSourcing.Serialization.Json.Extensions;
 using SIO.Infrastructure.AWS.Extensions;
 using SIO.Infrastructure.Extensions;
 using SIO.Infrastructure.Google.Extensions;
+using SIO.Infrastructure.Local.Extensions;
 using SIO.Migrations.DbContexts;
 
 namespace SIO.Translator
