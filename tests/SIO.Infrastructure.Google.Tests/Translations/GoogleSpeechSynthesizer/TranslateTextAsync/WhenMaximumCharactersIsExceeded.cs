@@ -15,8 +15,6 @@ namespace SIO.Infrastructure.Google.Tests.Translations.GoogleSpeechSynthesizer.T
     {
         private const string _fiveHundredCharacters = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed viverra justo sed elit eleifend, non sagittis dolor consequat. Duis erat odio, sodales non bibendum vitae, elementum at augue. Phasellus tristique semper nisl ac mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed viverra justo sed elit eleifend, non sagittis dolor consequat. Duis erat odio, sodales non bibendum vitae, elementum at augue. Phasellus tristique semper nisl ac mattis. Phasellus tristique semper nisl ac ma.";
         private GoogleSpeechRequest _request;
-        private int _chunksToBeExectued;
-        private int _chunksExectued;
 
         public WhenMaximumCharactersIsExceeded(ConfigurationFixture configurationFixture, SpeechSynthesizerFixture speechSynthesizerFixture) : base(configurationFixture, speechSynthesizerFixture)
         {
@@ -38,7 +36,6 @@ namespace SIO.Infrastructure.Google.Tests.Translations.GoogleSpeechSynthesizer.T
             }
 
             var textChunks = sb.ToString().ChunkWithDelimeters(5000, '.', '!', '?', ')', '"', '}', ']');
-            _chunksToBeExectued = textChunks.Count();
 
             _request = new GoogleSpeechRequest(
                 voiceSelection: new VoiceSelectionParams
@@ -50,12 +47,7 @@ namespace SIO.Infrastructure.Google.Tests.Translations.GoogleSpeechSynthesizer.T
                 {
                     AudioEncoding = AudioEncoding.Mp3
                 },
-                content: textChunks,
-                callback: length =>
-                {
-                    Interlocked.Increment(ref _chunksExectued);
-                    return Task.CompletedTask;
-                }
+                content: textChunks
             );
 
             return Task.CompletedTask;
@@ -65,12 +57,6 @@ namespace SIO.Infrastructure.Google.Tests.Translations.GoogleSpeechSynthesizer.T
         public void NoExceptionsShouldBeThrown()
         {
             Exception.Should().BeNull();
-        }
-
-        [Integration]
-        public void AllChunksShouldBeExecuted()
-        {
-            _chunksExectued.Should().Be(_chunksToBeExectued);
         }
 
         [Integration]

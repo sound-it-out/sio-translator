@@ -67,7 +67,9 @@ namespace SIO.Infrastructure.Google.Translations
             );
 
             result.DigestBytes(index, response.AudioContent);
-            await request.CallBack(text.Length);
+
+            if(request.CallBack != null)
+                await request.CallBack(text.Length);
         }
     }
 }
