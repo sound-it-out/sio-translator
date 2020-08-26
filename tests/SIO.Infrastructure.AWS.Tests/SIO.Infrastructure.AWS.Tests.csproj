@@ -39,8 +39,4 @@
     <ProjectReference Include="..\..\src\SIO.Testing\SIO.Testing.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Files\AWSFileClient\DeleteAsync\" />
-  </ItemGroup>
-
 </Project>
