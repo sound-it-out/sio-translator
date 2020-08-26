@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Clipboard" Version="1.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SIO.Domain\SIO.Domain.csproj" />
     <ProjectReference Include="..\SIO.Infrastructure\SIO.Infrastructure.csproj" />
   </ItemGroup>
