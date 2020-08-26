@@ -28,7 +28,7 @@ namespace SIO.Infrastructure.AWS.Translations
 
         public ValueTask<Stream> OpenStreamAsync()
         {
-            return new ValueTask<Stream>(new MemoryStream(Combine(_bytes.OrderBy(kvp => kvp.Key).Select(kvp => kvp.Value).ToArray())));
+            return new ValueTask<Stream>(new MemoryStream(Combine(_bytes.OrderBy(kvp => kvp.Key).Select(kvp => kvp.Value).ToArray()))); //lgtm [cs/local-not-disposed]
         }
 
         private byte[] Combine(params byte[][] arrays)
