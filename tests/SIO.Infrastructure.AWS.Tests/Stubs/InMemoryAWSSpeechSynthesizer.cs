@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using SIO.Infrastructure.AWS.Translations;
 using SIO.Infrastructure.Translations;
@@ -18,6 +19,8 @@ namespace SIO.Infrastructure.AWS.Tests.Stubs
         {
             if (_throwException)
                 throw new Exception();
+
+            request.CallBack(request.Content.Sum(s => s.Length));
 
             return new ValueTask<ISpeechResult>(new InMemoryAWSSpeechResult());
         }

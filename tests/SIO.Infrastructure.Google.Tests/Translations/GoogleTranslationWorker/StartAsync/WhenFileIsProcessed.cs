@@ -18,6 +18,7 @@ namespace SIO.Infrastructure.Google.Tests.Translations.GoogleTranslationWorker.S
     {
         private TranslationRequest _translationRequest;
         private readonly Guid _aggregateId = Guid.NewGuid();
+        private const string _text = "some test text.";
 
         protected override Task Given()
         {
@@ -33,7 +34,7 @@ namespace SIO.Infrastructure.Google.Tests.Translations.GoogleTranslationWorker.S
             using (var ms = new MemoryStream())
             using (TextWriter tw = new StreamWriter(ms))
             {
-                await tw.WriteAsync("some test text.");
+                await tw.WriteAsync(_text);
                 await tw.FlushAsync();
                 ms.Position = 0;
                 await fileClient.UploadAsync($"{_translationRequest.CorrelationId}{Path.GetExtension(_translationRequest.FileName)}", _translationRequest.UserId, ms);
@@ -61,6 +62,22 @@ namespace SIO.Infrastructure.Google.Tests.Translations.GoogleTranslationWorker.S
             var eventStore = _serviceProvider.GetRequiredService<IEventStore>();
             var events = await eventStore.GetEventsAsync(_aggregateId);
             events.Any(e => e.GetType() == typeof(TranslationSucceded)).Should().BeTrue();
+        }
+
+        [Then]
+        public async Task TranslationCharactersProcessedEventShouldBePublished()
+        {
+            var eventStore = _serviceProvider.GetRequiredService<IEventStore>();
+            var events = await eventStore.GetEventsAsync(_aggregateId);
+            events.Any(e => e.GetType() == typeof(TranslationCharactersProcessed)).Should().BeTrue();
+        }
+
+        [Then]
+        public async Task TranslationCharactersProcessedEventShouldBePublishedWithExpectedCharactersProcessed()
+        {
+            var eventStore = _serviceProvider.GetRequiredService<IEventStore>();
+            var events = await eventStore.GetEventsAsync(_aggregateId);
+            ((TranslationCharactersProcessed)events.First(e => e.GetType() == typeof(TranslationCharactersProcessed))).CharactersProcessed.Should().Be(_text.Length);
         }
     }
 }

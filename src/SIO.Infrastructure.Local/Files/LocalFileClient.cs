@@ -22,13 +22,22 @@ namespace SIO.Infrastructure.Local.Files
 
         public Task DeleteAsync(string fileName, string userId)
         {
-            File.Delete(Path.Combine(Path.GetTempPath(), $"sio/{userId}/{fileName}"));
+            var filePath = Path.Combine(Path.GetTempPath(), $"sio/{userId}/{fileName}");
+
+            if (File.Exists(filePath))
+                File.Delete(filePath);
+
             return Task.CompletedTask;
         }
 
         public Task<FileResult> DownloadAsync(string fileName, string userId)
         {
-            var stream = File.OpenRead(Path.Combine(Path.GetTempPath(), $"sio/{userId}/{fileName}"));
+            var filePath = Path.Combine(Path.GetTempPath(), $"sio/{userId}/{fileName}");
+
+            if (!File.Exists(filePath))
+                throw new FileNotFoundException($"Unable to find file: {fileName}");
+
+            var stream = File.OpenRead(filePath);
             return Task.FromResult(new FileResult(Extract(stream.Name), () => stream));
         }
 

@@ -1,14 +1,13 @@
-﻿using Amazon;
-using Amazon.Runtime;
-using Amazon.S3;
-using Amazon.S3.Model;
-using Microsoft.AspNetCore.StaticFiles;
-using Microsoft.Extensions.Options;
-using SIO.Infrastructure.Files;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using Amazon;
+using Amazon.Runtime;
+using Amazon.S3;
+using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.Extensions.Options;
+using SIO.Infrastructure.Files;
 
 namespace SIO.Infrastructure.AWS.Files
 {

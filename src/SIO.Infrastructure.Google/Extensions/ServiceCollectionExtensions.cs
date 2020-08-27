@@ -11,7 +11,7 @@ namespace SIO.Infrastructure.Google.Extensions
         public static IServiceCollection AddGoogleTranslations(this IServiceCollection source)
         {
             source.AddHostedService<BackgroundTranslator<GoogleTranslation>>();
-            source.AddScoped<GoogleTranslation>();
+            source.AddGoogleTranslation();
             source.AddGoogleSpeechSynthesizer();
             source.AddGoogleTranslationWorker();
 
@@ -22,6 +22,12 @@ namespace SIO.Infrastructure.Google.Extensions
         {
             source.Configure<GoogleCredentialOptions>(configuration.GetSection("Google:Credentails"));
 
+            return source;
+        }
+
+        public static IServiceCollection AddGoogleTranslation(this IServiceCollection source)
+        {
+            source.AddScoped<GoogleTranslation>();
             return source;
         }
 

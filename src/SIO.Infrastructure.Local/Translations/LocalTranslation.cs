@@ -10,7 +10,7 @@ using SIO.Infrastructure.Translations;
 
 namespace SIO.Infrastructure.Local.Translations
 {
-    internal sealed class LocalTranslation : Translation
+    public sealed class LocalTranslation : Translation
     {
         private readonly ITranslationWorker<LocalTranslation> _translationWorker;
         private readonly IEventPublisher _eventPublisher;

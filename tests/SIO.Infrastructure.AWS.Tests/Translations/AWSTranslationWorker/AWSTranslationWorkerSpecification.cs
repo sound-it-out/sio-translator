@@ -13,7 +13,7 @@ namespace SIO.Infrastructure.AWS.Tests.Translations.AWSTranslationWorker
 {
     public abstract class AWSTranslationWorkerSpecification : Specification
     {
-        protected ITranslationWorker<AWSTranslation> TranslationWorker => _serviceProvider.GetRequiredService<ITranslationWorker<AWSTranslation>>();
+        protected ITranslationWorker<AWS.Translations.AWSTranslation> TranslationWorker => _serviceProvider.GetRequiredService<ITranslationWorker<AWS.Translations.AWSTranslation>>();
 
         protected override void BuildServices(IServiceCollection services)
         {

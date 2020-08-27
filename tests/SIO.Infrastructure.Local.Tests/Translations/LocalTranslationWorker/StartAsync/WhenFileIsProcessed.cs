@@ -6,15 +6,13 @@ using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using OpenEventSourcing.Events;
 using SIO.Domain.Translation.Events;
-using SIO.Infrastructure.AWS.Tests.Stubs;
-using SIO.Infrastructure.AWS.Translations;
 using SIO.Infrastructure.Files;
 using SIO.Infrastructure.Translations;
 using SIO.Testing.Attributes;
 
-namespace SIO.Infrastructure.AWS.Tests.Translations.AWSTranslationWorker.StartAsync
+namespace SIO.Infrastructure.Local.Tests.Translations.LocalTranslationWorker.StartAsync
 {
-    public class WhenFileIsProcessed : AWSTranslationWorkerSpecification
+    public class WhenFileIsProcessed : LocalTranslationWorkerSpecification
     {
         private TranslationRequest _translationRequest;
         private readonly Guid _aggregateId = Guid.NewGuid();
@@ -39,12 +37,7 @@ namespace SIO.Infrastructure.AWS.Tests.Translations.AWSTranslationWorker.StartAs
                 ms.Position = 0;
                 await fileClient.UploadAsync($"{_translationRequest.CorrelationId}{Path.GetExtension(_translationRequest.FileName)}", _translationRequest.UserId, ms);
             }
-        }
 
-        protected override void BuildServices(IServiceCollection services)
-        {
-            base.BuildServices(services);
-            services.AddSingleton<ISpeechSynthesizer<AWSSpeechRequest>>(new InMemoryAWSSpeechSynthesizer(false));
         }
 
         [Then]

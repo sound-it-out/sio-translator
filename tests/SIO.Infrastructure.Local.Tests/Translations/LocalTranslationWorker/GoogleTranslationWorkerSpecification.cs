@@ -3,16 +3,16 @@ using Microsoft.Extensions.Logging;
 using OpenEventSourcing.Extensions;
 using OpenEventSourcing.Serialization.Json.Extensions;
 using SIO.Infrastructure.Extensions;
-using SIO.Infrastructure.Google.Extensions;
+using SIO.Infrastructure.Local.Extensions;
 using SIO.Infrastructure.Translations;
 using SIO.Testing.Abstractions;
 using SIO.Testing.Extensions;
 
-namespace SIO.Infrastructure.Google.Tests.Translations.GoogleTranslationWorker
+namespace SIO.Infrastructure.Local.Tests.Translations.LocalTranslationWorker
 {
-    public abstract class GoogleTranslationWorkerSpecification : Specification
+    public abstract class LocalTranslationWorkerSpecification : Specification
     {
-        protected ITranslationWorker<Google.Translations.GoogleTranslation> TranslationWorker => _serviceProvider.GetRequiredService<ITranslationWorker<Google.Translations.GoogleTranslation>>();
+        protected ITranslationWorker<Local.Translations.LocalTranslation> TranslationWorker => _serviceProvider.GetRequiredService<ITranslationWorker<Local.Translations.LocalTranslation>>();
 
         protected override void BuildServices(IServiceCollection services)
         {
@@ -26,7 +26,7 @@ namespace SIO.Infrastructure.Google.Tests.Translations.GoogleTranslationWorker
                 .AddInMemoryDatabase()
                 .AddInMemoryFiles()
                 .AddInMemoryEventBus()
-                .AddGoogleTranslationWorker()
+                .AddLocalTranslationWorker()
                 .AddLogging(logging => logging.AddConsole());
         }
     }
