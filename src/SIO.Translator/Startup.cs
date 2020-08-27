@@ -49,9 +49,9 @@ namespace SIO.Translator
                 .AddJsonSerializers();
 
             services.AddGoogleConfiguration(_configuration)
-                    .AddGoogleTranslations()
+                    .AddGoogleInfrastructure()
                     .AddAWSConfiguration(_configuration)
-                    .AddAWSTranslations();
+                    .AddAWSInfrastructure();
 
             if (_env.IsDevelopment())
             {

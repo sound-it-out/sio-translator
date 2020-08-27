@@ -8,7 +8,7 @@ namespace SIO.Infrastructure.Google.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddGoogleTranslations(this IServiceCollection source)
+        public static IServiceCollection AddGoogleInfrastructure(this IServiceCollection source)
         {
             source.AddHostedService<BackgroundTranslator<GoogleTranslation>>();
             source.AddGoogleTranslation();

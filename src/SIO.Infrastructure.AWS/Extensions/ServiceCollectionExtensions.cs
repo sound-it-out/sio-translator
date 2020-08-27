@@ -10,7 +10,7 @@ namespace SIO.Infrastructure.AWS.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddAWSTranslations(this IServiceCollection source)
+        public static IServiceCollection AddAWSInfrastructure(this IServiceCollection source)
         {
             source.AddHostedService<BackgroundTranslator<AWSTranslation>>();
             source.AddAWSTranslation();
