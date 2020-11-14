@@ -2,6 +2,7 @@
 using OpenEventSourcing.Commands;
 using OpenEventSourcing.Events;
 using OpenEventSourcing.Extensions;
+using SIO.Domain.Translations;
 
 namespace SIO.Domain.Translation.Events
 {

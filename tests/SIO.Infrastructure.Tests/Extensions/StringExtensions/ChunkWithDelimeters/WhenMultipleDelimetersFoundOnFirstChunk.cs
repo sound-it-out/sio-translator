@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using SIO.Infrastructure.Extensions;
-using SIO.Tests.Infrastructure;
+using SIO.Testing.Attributes;
 
 namespace SIO.Infrastructure.Tests.Extensions.StringExtensions.ChunkWithDelimeters
 {

@@ -22,21 +22,19 @@ jobs:
     - name: Build projects
       run: dotnet build --configuration Release --no-restore
 
-    # Test SIO.Domain.Tests
-    - name: Test SIO.Domain.Tests
-      run: dotnet test tests/SIO.Domain.Tests/SIO.Domain.Tests.csproj --configuration Release --no-restore --no-build --verbosity normal -- xunit.parallelizeAssembly=true
-    # Test SIO.Infrastructure.AWS.Tests
-    - name: Test SIO.Infrastructure.AWS.Tests
-      run: dotnet test tests/SIO.Infrastructure.AWS.Tests/SIO.Infrastructure.AWS.Tests.csproj --configuration Release --no-restore --no-build --verbosity normal -- xunit.parallelizeAssembly=true
-    # Test SIO.Infrastructure.Google.Tests
-    - name: Test SIO.Infrastructure.Google.Tests
-      run: dotnet test tests/SIO.Infrastructure.Google.Tests/SIO.Infrastructure.Google.Tests.csproj --configuration Release --no-restore --no-build --verbosity normal -- xunit.parallelizeAssembly=true
-    # Test SIO.Infrastructure.Tests
-    - name: Test SIO.Infrastructure.Tests
-      run: dotnet test tests/SIO.Infrastructure.Tests/SIO.Infrastructure.Tests.csproj --configuration Release --no-restore --no-build --verbosity normal -- xunit.parallelizeAssembly=true
-    # Test SIO.Migrations.Tests
-    - name: Test SIO.Migrations.Tests
-      run: dotnet test tests/SIO.Migrations.Tests/SIO.Migrations.Tests.csproj --configuration Release --no-restore --no-build --verbosity normal -- xunit.parallelizeAssembly=true
-    # Test SIO.Translator.Tests
-    - name: Test SIO.Translator.Tests
-      run: dotnet test tests/SIO.Translator.Tests/SIO.Translator.Tests.csproj --configuration Release --no-restore --no-build --verbosity normal -- xunit.parallelizeAssembly=true
+    # Run test projects
+    - name: Run test projects
+      run: dotnet test SIO-Translator.sln --configuration Release --no-restore --no-build --verbosity normal -- xunit.parallelizeAssembly=true
+      env: 
+        SIO_AWS__CREDENTIALS__ACCESSKEY: ${{ secrets.AWS_CREDENTAILS_ACCESSKEY }}
+        SIO_AWS__CREDENTIALS__SECRETKEY: ${{ secrets.AWS_CREDENTAILS_SECRETKEY }}
+        SIO_GOOGLE__CREDENTIALS__TYPE: ${{ secrets.GOOGLE_CREDENTAILS_TYPE }}
+        SIO_GOOGLE__CREDENTIALS__PROJECTID: ${{ secrets.GOOGLE_CREDENTAILS_PROJECTID }}
+        SIO_GOOGLE__CREDENTIALS__PRIVATEKEYID: ${{ secrets.GOOGLE_CREDENTAILS_PRIVATEKEYID }}
+        SIO_GOOGLE__CREDENTIALS__PRIVATEKEY: ${{ secrets.GOOGLE_CREDENTAILS_PRIVATEKEY }}
+        SIO_GOOGLE__CREDENTIALS__CLIENTEMAIL: ${{ secrets.GOOGLE_CREDENTAILS_CLIENTEMAIL }}
+        SIO_GOOGLE__CREDENTIALS__CLIENTID: ${{ secrets.GOOGLE_CREDENTAILS_CLIENTID }}
+        SIO_GOOGLE__CREDENTIALS__AUTHURI: ${{ secrets.GOOGLE_CREDENTAILS_AUTHURI }}
+        SIO_GOOGLE__CREDENTIALS__TOKENURI: ${{ secrets.GOOGLE_CREDENTAILS_TOKENURI }}
+        SIO_GOOGLE__CREDENTIALS__AUTHPROVIDERX509CERTURL: ${{ secrets.GOOGLE_CREDENTAILS_AUTHPROVIDERX509CERTURL }}
+        SIO_GOOGLE__CREDENTIALS__CLIENTX509CERTURL: ${{ secrets.GOOGLE_CREDENTAILS_CLIENTX509CERTURL }}

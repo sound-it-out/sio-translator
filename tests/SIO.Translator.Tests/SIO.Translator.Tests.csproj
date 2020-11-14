@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\SIO.Tests.Infrastructure\SIO.Tests.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\SIO.Testing\SIO.Testing.csproj" />
     <ProjectReference Include="..\..\src\SIO.Translator\SIO.Translator.csproj" />
   </ItemGroup>
 

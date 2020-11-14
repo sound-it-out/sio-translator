@@ -1,0 +1,75 @@
+﻿using System;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using FluentAssertions;
+using Microsoft.Extensions.DependencyInjection;
+using OpenEventSourcing.Events;
+using SIO.Domain.Translation.Events;
+using SIO.Infrastructure.Files;
+using SIO.Infrastructure.Translations;
+using SIO.Testing.Attributes;
+
+namespace SIO.Infrastructure.Local.Tests.Translations.LocalTranslationWorker.StartAsync
+{
+    public class WhenFileIsProcessed : LocalTranslationWorkerSpecification
+    {
+        private TranslationRequest _translationRequest;
+        private readonly Guid _aggregateId = Guid.NewGuid();
+        private const string _text = "some test text.";
+
+        protected override Task Given()
+        {
+            return TranslationWorker.StartAsync(_translationRequest);
+        }
+
+        protected override async Task When()
+        {
+            var fileClient = _serviceProvider.GetRequiredService<IFileClient>();            
+
+            _translationRequest = new TranslationRequest(_aggregateId, Guid.NewGuid(), Guid.NewGuid(), 1, Guid.NewGuid().ToString(), "test.txt", "en-GB-Standard-F");
+
+            using (var ms = new MemoryStream())
+            using (TextWriter tw = new StreamWriter(ms))
+            {
+                await tw.WriteAsync(_text);
+                await tw.FlushAsync();
+                ms.Position = 0;
+                await fileClient.UploadAsync($"{_translationRequest.CorrelationId}{Path.GetExtension(_translationRequest.FileName)}", _translationRequest.UserId, ms);
+            }
+
+        }
+
+        [Then]
+        public async Task TranslationStartedEventShouldBePublished()
+        {
+            var eventStore = _serviceProvider.GetRequiredService<IEventStore>();
+            var events = await eventStore.GetEventsAsync(_aggregateId);
+            events.Any(e => e.GetType() == typeof(TranslationStarted)).Should().BeTrue();
+        }
+
+        [Then]
+        public async Task TranslationSuccededEventShouldBePublished()
+        {
+            var eventStore = _serviceProvider.GetRequiredService<IEventStore>();
+            var events = await eventStore.GetEventsAsync(_aggregateId);
+            events.Any(e => e.GetType() == typeof(TranslationSucceded)).Should().BeTrue();
+        }
+
+        [Then]
+        public async Task TranslationCharactersProcessedEventShouldBePublished()
+        {
+            var eventStore = _serviceProvider.GetRequiredService<IEventStore>();
+            var events = await eventStore.GetEventsAsync(_aggregateId);
+            events.Any(e => e.GetType() == typeof(TranslationCharactersProcessed)).Should().BeTrue();
+        }
+
+        [Then]
+        public async Task TranslationCharactersProcessedEventShouldBePublishedWithExpectedCharactersProcessed()
+        {
+            var eventStore = _serviceProvider.GetRequiredService<IEventStore>();
+            var events = await eventStore.GetEventsAsync(_aggregateId);
+            ((TranslationCharactersProcessed)events.First(e => e.GetType() == typeof(TranslationCharactersProcessed))).CharactersProcessed.Should().Be(_text.Length);
+        }
+    }
+}

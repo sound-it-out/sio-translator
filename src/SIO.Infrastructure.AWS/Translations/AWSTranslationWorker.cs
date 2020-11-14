@@ -1,10 +1,12 @@
 ﻿using Clipboard;
 using SIO.Domain.Translation.Events;
 using SIO.Infrastructure.Events;
+using SIO.Infrastructure.Extensions;
 using SIO.Infrastructure.Files;
 using SIO.Infrastructure.Translations;
 using System;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SIO.Infrastructure.AWS.Translations
@@ -14,6 +16,7 @@ namespace SIO.Infrastructure.AWS.Translations
         private readonly IEventPublisher _eventPublisher;
         private readonly IFileClient _fileClient;
         private readonly ISpeechSynthesizer<AWSSpeechRequest> _speechSynthesizer;
+        private readonly SemaphoreSlim _semaphoreSlim = new SemaphoreSlim(1, 1);
 
         public AWSTranslationWorker(IEventPublisher eventPublisher,
             IFileClient fileClient,
@@ -25,6 +28,10 @@ namespace SIO.Infrastructure.AWS.Translations
                 throw new ArgumentNullException(nameof(fileClient));
             if (speechSynthesizer == null)
                 throw new ArgumentNullException(nameof(speechSynthesizer));
+
+            _eventPublisher = eventPublisher;
+            _fileClient = fileClient;
+            _speechSynthesizer = speechSynthesizer;
         }
 
         public async Task StartAsync(TranslationRequest request)
@@ -44,6 +51,8 @@ namespace SIO.Infrastructure.AWS.Translations
                 text = await textExtractor.ExtractAsync();
             }
 
+            var textChunks = text.ChunkWithDelimeters(100000, '.', '!', '?', ')', '"', '}', ']');
+
             await _eventPublisher.PublishAsync(new TranslationStarted(
                 aggregateId: request.AggregateId,
                 version: version,
@@ -57,9 +66,34 @@ namespace SIO.Infrastructure.AWS.Translations
             {
                 var result = await _speechSynthesizer.TranslateTextAsync(new AWSSpeechRequest { 
                     OutputFormat = "",
-                    Text = text,
-                    VoiceId = Amazon.Polly.VoiceId.Amy
-                });;
+                    Content = textChunks,
+                    VoiceId = request.TranslationSubject,
+                    CallBack = async length =>
+                    {
+                        Interlocked.Increment(ref version);
+                        await _semaphoreSlim.WaitAsync();
+
+                        try
+                        {
+                            await _eventPublisher.PublishAsync(new TranslationCharactersProcessed(
+                                aggregateId: request.AggregateId,
+                                version: version,
+                                correlationId: request.CorrelationId,
+                                causationId: request.CausationId,
+                                charactersProcessed: length,
+                                userId: request.UserId
+                            ));
+                        }
+                        catch (Exception)
+                        {
+                            throw;
+                        }
+                        finally
+                        {
+                            _semaphoreSlim.Release();
+                        }
+                    }
+            });;
 
 
                 using (var stream = await result.OpenStreamAsync())

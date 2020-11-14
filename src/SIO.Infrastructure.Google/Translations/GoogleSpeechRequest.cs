@@ -3,17 +3,18 @@ using SIO.Infrastructure.Translations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace SIO.Infrastructure.Google.Translations
 {
-    internal sealed class GoogleSpeechRequest : ISpeechRequest
+    public sealed class GoogleSpeechRequest : ISpeechRequest
     {
         public VoiceSelectionParams VoiceSelection { get; }
         public AudioConfig AudioConfig { get; }
         public IEnumerable<string> Content { get; }
-        public Action<long> CallBack { get; }
+        public Func<long, Task> CallBack { get; }
 
-        public GoogleSpeechRequest(VoiceSelectionParams voiceSelection, AudioConfig audioConfig, IEnumerable<string> content, Action<long> callback = null)
+        public GoogleSpeechRequest(VoiceSelectionParams voiceSelection, AudioConfig audioConfig, IEnumerable<string> content, Func<long, Task> callback = null)
         {
             if (voiceSelection == null)
                 throw new ArgumentNullException(nameof(voiceSelection));

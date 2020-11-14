@@ -22,6 +22,7 @@
     <ProjectReference Include="..\SIO.Domain\SIO.Domain.csproj" />
     <ProjectReference Include="..\SIO.Infrastructure.AWS\SIO.Infrastructure.AWS.csproj" />
     <ProjectReference Include="..\SIO.Infrastructure.Google\SIO.Infrastructure.Google.csproj" />
+    <ProjectReference Include="..\SIO.Infrastructure.Local\SIO.Infrastructure.Local.csproj" />
     <ProjectReference Include="..\SIO.Infrastructure\SIO.Infrastructure.csproj" />
     <ProjectReference Include="..\SIO.Migrations\SIO.Migrations.csproj" />
   </ItemGroup>

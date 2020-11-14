@@ -1,8 +1,12 @@
 ﻿using Google.Apis.Auth.OAuth2;
 using Google.Cloud.TextToSpeech.V1;
 using Grpc.Auth;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using SIO.Infrastructure.Extensions;
 using SIO.Infrastructure.Translations;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,9 +16,12 @@ namespace SIO.Infrastructure.Google.Translations
     {
         private readonly TextToSpeechClient _client;
 
-        public GoogleSpeechSynthesizer()
+        public GoogleSpeechSynthesizer(IOptions<GoogleCredentialOptions> googleCredentialOptions)
         {
-            var credentials = GoogleCredential.FromFile(@"C:\Users\matth\Downloads\My First Project-06fc82e47656.json");
+            if (googleCredentialOptions == null)
+                throw new ArgumentNullException(nameof(googleCredentialOptions));
+
+            var credentials = GoogleCredential.FromJson(JsonConvert.SerializeObject(googleCredentialOptions.Value));
 
             var builder = new TextToSpeechClientBuilder();
             builder.ChannelCredentials = credentials.ToChannelCredentials();
@@ -25,14 +32,24 @@ namespace SIO.Infrastructure.Google.Translations
         {
             var result = new GoogleSpeechResult();
 
-            foreach (var requestChunks in request.Content.Chunk(300))
-            {
-                await Task.WhenAll(requestChunks.Select((c, i) =>
-                    QueueText(c, i, request, result)
-                ));
+            var chunks = request.Content.Chunk(30).ToArray();
 
-                // Need to wait some time due to rate limits
-                await Task.Delay(1);
+            var textIndex = 0;
+
+            for (int i = 0; i < chunks.Length; i++)
+            {
+                if(i > 0)
+                    await Task.Delay(60000);
+
+                var tasks = new List<Task>();
+
+                foreach(var chunk in chunks[i])
+                {
+                    tasks.Add(QueueText(chunk, textIndex, request, result));
+                    textIndex++;
+                }
+
+                await Task.WhenAll(tasks);
             }
 
             return result;
@@ -50,7 +67,9 @@ namespace SIO.Infrastructure.Google.Translations
             );
 
             result.DigestBytes(index, response.AudioContent);
-            request.CallBack(text.Length);
+
+            if(request.CallBack != null)
+                await request.CallBack(text.Length);
         }
     }
 }

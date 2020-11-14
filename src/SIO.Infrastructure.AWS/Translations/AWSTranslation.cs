@@ -10,7 +10,7 @@ using SIO.Infrastructure.Translations;
 
 namespace SIO.Infrastructure.AWS.Translations
 {
-    internal sealed class AWSTranslation : Translation
+    public sealed class AWSTranslation : Translation
     {
         private readonly ITranslationWorker<AWSTranslation> _translationWorker;
         private readonly IEventPublisher _eventPublisher;
@@ -50,7 +50,8 @@ namespace SIO.Infrastructure.AWS.Translations
                     translationQueuedEvent.CausationId.Value,
                     translationQueuedEvent.Version,
                     documentUploaded.UserId,
-                    documentUploaded.FileName
+                    documentUploaded.FileName,
+                    documentUploaded.TranslationSubject
                 )
             ));
         }

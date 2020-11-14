@@ -12,6 +12,7 @@ using OpenEventSourcing.Serialization.Json.Extensions;
 using SIO.Infrastructure.AWS.Extensions;
 using SIO.Infrastructure.Extensions;
 using SIO.Infrastructure.Google.Extensions;
+using SIO.Infrastructure.Local.Extensions;
 using SIO.Migrations.DbContexts;
 
 namespace SIO.Translator
@@ -47,17 +48,19 @@ namespace SIO.Translator
                 .AddEvents()
                 .AddJsonSerializers();
 
+            services.AddGoogleConfiguration(_configuration)
+                    .AddGoogleInfrastructure()
+                    .AddAWSConfiguration(_configuration)
+                    .AddAWSInfrastructure();
+
             if (_env.IsDevelopment())
             {
                 services.AddLocalFiles()
-                    .AddGoogleTranslations();
-                //.AddLocalTranslations();
+                    .AddLocalTranslations();
             }
             else
             {
-                services.AddGoogleTranslations()
-                    .AddAWSTranslations()
-                    .AddAWSFiles();
+                services.AddAWSFiles();
             }
 
             services.AddDbContext<SIOTranslatorDbContext>(options =>
