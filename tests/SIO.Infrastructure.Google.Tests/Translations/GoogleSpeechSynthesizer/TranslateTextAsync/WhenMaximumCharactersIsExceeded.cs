@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Clipboard;
 using FluentAssertions;
 using Google.Cloud.TextToSpeech.V1;
 using SIO.Infrastructure.Extensions;
@@ -25,7 +27,7 @@ namespace SIO.Infrastructure.Google.Tests.Translations.GoogleSpeechSynthesizer.T
             return await SpeechSynthesizer.TranslateTextAsync(_request);
         }
 
-        protected override Task When()
+        protected override async Task When()
         {
             ExceptionMode = Testing.Abstractions.ExceptionMode.Record;
             var sb = new StringBuilder();
@@ -34,14 +36,19 @@ namespace SIO.Infrastructure.Google.Tests.Translations.GoogleSpeechSynthesizer.T
             {
                 sb.Append(_fiveHundredCharacters);
             }
+            var text = "";
 
-            var textChunks = sb.ToString().ChunkWithDelimeters(5000, '.', '!', '?', ')', '"', '}', ']');
+            using (var textExtractor = TextExtractor.Open(@"C:\Users\matth\Desktop\test.txt"))
+            {
+                text = await textExtractor.ExtractAsync();
+            }
+
+            var textChunks = text.ChunkWithDelimeters(4800, '.', '!', '?', ')', '"', '}', ']');
 
             _request = new GoogleSpeechRequest(
                 voiceSelection: new VoiceSelectionParams
                 {
-                    LanguageCode = "en-US",
-                    SsmlGender = SsmlVoiceGender.Neutral
+                    Name = ""
                 },
                 audioConfig: new AudioConfig
                 {
@@ -49,8 +56,6 @@ namespace SIO.Infrastructure.Google.Tests.Translations.GoogleSpeechSynthesizer.T
                 },
                 content: textChunks
             );
-
-            return Task.CompletedTask;
         }
 
         [Integration]
@@ -66,6 +71,11 @@ namespace SIO.Infrastructure.Google.Tests.Translations.GoogleSpeechSynthesizer.T
             {
                 stream.Should().NotBeNull();
                 stream.Length.Should().BeGreaterThan(0);
+                using (FileStream fs = new FileStream(@"C:\Users\matth\Desktop\test.mp3", FileMode.Create))
+                {
+                    await stream.CopyToAsync(fs);
+                    fs.Flush();
+                }
             }
         }
     }
