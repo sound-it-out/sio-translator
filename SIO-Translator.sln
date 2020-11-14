@@ -51,9 +51,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SIO.Testing", "src\SIO.Testing\SIO.Testing.csproj", "{131FD9BA-6D8B-4754-96EE-A6988429D498}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SIO.Infrastructure.Local", "src\SIO.Infrastructure.Local\SIO.Infrastructure.Local.csproj", "{26901E34-BE2B-4889-9E66-781493122110}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SIO.Infrastructure.Local", "src\SIO.Infrastructure.Local\SIO.Infrastructure.Local.csproj", "{26901E34-BE2B-4889-9E66-781493122110}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SIO.Infrastructure.Local.Tests", "tests\SIO.Infrastructure.Local.Tests\SIO.Infrastructure.Local.Tests.csproj", "{5AEEE944-47D4-4C6E-AB09-31D9AD735C24}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SIO.Infrastructure.Local.Tests", "tests\SIO.Infrastructure.Local.Tests\SIO.Infrastructure.Local.Tests.csproj", "{5AEEE944-47D4-4C6E-AB09-31D9AD735C24}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
