@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AWSSDK.Polly" Version="3.3.103.104" />
-    <PackageReference Include="AWSSDK.S3" Version="3.3.111.11" />
+    <PackageReference Include="AWSSDK.Polly" Version="3.5.1.1" />
+    <PackageReference Include="AWSSDK.S3" Version="3.5.4.1" />
     <PackageReference Include="Clipboard" Version="1.2.1" />
   </ItemGroup>
 
